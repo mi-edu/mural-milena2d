@@ -1,0 +1,104 @@
+* {
+    font-family: Verdana;
+    font-size: 96%;
+    margin: 0;
+    padding: 0;
+}
+
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+label.error {
+    color: red;
+    font-size: 10px;
+}
+
+
+em {
+    font-weight: bold;
+}
+
+/* Fundo do body */
+/* Centraliza todo o conteúdo */
+body {
+    background-image: url('imgs/minimalista.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;;
+	 text-align: center; 
+
+    display: flex;
+    justify-content: center; /* centraliza horizontal */
+    align-items: center;     /* centraliza vertical */
+    height: 100vh;           /* altura da tela inteira */
+    margin: 0;
+}
+
+/* Mantém a largura do container */
+#main {
+    width: 500px;
+}
+
+#geral {
+    width: 500px;
+    background: #fff;
+}
+
+
+#header {
+    min-height: 100px;
+    background-image: url('images/header-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #80058e;
+    padding: 20px;
+}
+#header h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+#formulario_mural {
+    width: 480px;
+    padding: 10px;
+    background: #F8F0FF;
+}
+
+#mural input, #mural textarea {
+    border: 1px solid #9B59B6;
+    border-radius: 4px;
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.btn {
+    background: #9B59B6;
+    color: #fff;
+    padding: 7px;
+    border: 1px solid #6A0DAD;
+}
+
+
+.recados {
+    width: 480px;
+    padding: 10px;
+    background: #F3E5FF;
+    border-bottom: 2px solid #6f288a;
+    margin-bottom: 10px;
+}
+
+
+#footer {
+    width: 500px;
+    height: 30px;
+    background: #4B0082;
+}
+#footer p {
+    color: #CCC;
+    padding-left: 10px;
+}
+#footer a {
+    color: #b05fe6;
+}
