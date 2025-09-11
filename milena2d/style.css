@@ -1,0 +1,111 @@
+* {
+  font-family: Verdana;
+  font-size: 96%;
+  margin: 0;
+  padding: 0;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+label.error {
+  color: red;
+  font-size: 10px;
+}
+
+ul {
+  list-style-position: inside;
+  padding-left: 0;
+  text-align: left;
+}
+
+em {
+  font-weight: bold;
+}
+
+/* Fundo do body */
+body {
+  background: url('imgs/minimalista.jpg') center/cover no-repeat;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  cursor: pointer;  
+}
+
+#main,
+#geral,
+#footer {
+  width: 500px;
+}
+
+#geral {
+  background: #340148 url(imgs/img2.jpg);
+}
+
+#header {
+  min-height: 100px;
+  background: url('images/header-bg.jpg') center/cover;
+  color: #80058e;
+  padding: 20px;
+}
+#header h1 {
+  font-size: 24px;
+}
+
+#formulario_mural {
+  width: 480px;
+  padding: 10px;
+  background: #F8F0FF;
+}
+
+#mural input,
+#mural textarea {
+  border: 1px solid #9B59B6;
+  border-radius: 4px;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.btn {
+  background: #9B59B6;
+  color: #fff;
+  padding: 7px;
+  border: 1px solid #6A0DAD;
+}
+
+.recados {
+  width: 480px;
+  padding: 10px;
+  background: #F3E5FF;
+  border-bottom: 2px solid #6f288a;
+  margin-bottom: 10px;
+}
+
+/* rodapé */
+#footer {
+  height: 30px;
+  background: #4B0082;
+  text-align: center;
+  padding: 5px 0;
+}
+
+#footer button {
+  background: linear-gradient(45deg, #6a0dad, #8e24aa);
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+#footer button:hover {
+  background: linear-gradient(45deg, #8e24aa, #ba68c8);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
