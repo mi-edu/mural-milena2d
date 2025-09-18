@@ -1,4 +1,15 @@
 <?php
+
+include "conexao.php";
+if(isset($_POST['atualiza'])){
+    $idatualiza = intval($_POST['id']);
+    $nome       = mysqli_real_escape_string($conexao, $_POST['nome']);
+    $email      = mysqli_real_escape_string($conexao, $_POST['email']);
+    $mensagem        = mysqli_real_escape_string($conexao, $_POST['mensagem']);
+
+    $sql = "UPDATE recados SET nome='$nome', email='$email', mensagem='$mensagem' WHERE id=$idatualiza";
+    mysqli_query($conexao, $sql) or die("Erro ao atualizar: " . mysqli_error($conexao));
+    header("Location: moderar.php");
 include "conexao.php"; // conexão com MySQL + variáveis do Cloudinary
 
 // Função para deletar imagem do Cloudinary
@@ -44,6 +55,9 @@ if(isset($_GET['excluir'])) {
     header("Location: index.php"); //substituir se estiver diferente
     exit;
 }
+if(isset($_GET['acao']) && $_GET['acao'] == 'excluir'){
+    $id = intval($_GET['id']);
+    mysqli_query($conexao, "DELETE FROM recados WHERE id=$id") or die("Erro ao deletar: " . mysqli_error($conexao));
 
 // Editar produto
 if(isset($_POST['editar'])) {
@@ -57,26 +71,76 @@ if(isset($_POST['editar'])) {
     header("Location: moderar.php");
     exit;
 }
+$editar_id = isset($_GET['acao']) && $_GET['acao'] == 'editar' ? intval($_GET['id']) : 0;
+$recado_editar = null;
+if($editar_id){
+    $res = mysqli_query($conexao, "SELECT * FROM recados WHERE id=$editar_id");
+    $recado_editar = mysqli_fetch_assoc($res);}
+}
 
 // Selecionar produtos para exibição
 $editar_id = isset($_GET['editar']) ? intval($_GET['editar']) : 0;
 $produtos = mysqli_query($conexao, "SELECT * FROM produtos ORDER BY id DESC");
 ?>
 
+<!doctype html>     
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
 <meta charset="utf-8"/>
+<title>Moderar pedidos</title>
 <title>Moderar Produtos</title>
 <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 <div id="main">
+<div id="geral">
+<div id="header">
+    <h1>editar de pedidos</h1>
+</div>
+<?php if($recado_editar): ?>
+    <div id="formulario_editar">
+    <form method="post">
+        <label>Nome:</label>
+        <input type="text" name="nome" value="<?php echo htmlspecialchars($recado_editar['nome']); ?>"/><br/>
+        <label>Email:</label>
+        <input type="text" name="email" value="<?php echo htmlspecialchars($recado_editar['email']); ?>"/><br/>
+        <label>Mensagem:</label>
+        <textarea name="mensagem"><?php echo htmlspecialchars($recado_editar['mensagem']); ?></textarea><br/>
+        <input type="hidden" name="id" value="<?php echo $recado_editar['id']; ?>"/>
+        <input type="submit" name="atualiza" value="Modificar Recado" class="btn"/>
+    </form>
+    </div>
+    <?php endif; ?>
+    <?php
+$seleciona = mysqli_query($conexao, "SELECT * FROM recados ORDER BY id DESC");
+if(mysqli_num_rows($seleciona) <= 0){
+    echo "<p>Nenhum pedido no mural!</p>";
+}else{
+    while($res = mysqli_fetch_assoc($seleciona)){
+        echo '<ul class="recados">';
+        echo '<li><strong>ID:</strong> ' . $res['id'] . ' |
+              <a href="moderar.php?acao=excluir&id=' . $res['id'] . '">Remover</a> |
+              <a href="moderar.php?acao=editar&id=' . $res['id'] . '">Modificar</a></li>';
+        echo '<li><strong>Nome:</strong> ' . htmlspecialchars($res['nome']) . '</li>';
+        echo '<li><strong>Email:</strong> ' . htmlspecialchars($res['email']) . '</li>';
+        echo '<li><strong>Mensagem:</strong> ' . nl2br(htmlspecialchars($res['mensagem'])) . '</li>';
+        echo '</ul>';
+    }
+}
+?>
+<div id="footer">
+    <form action="index.php" method="get">
+        <button type="submit">adicionar</button>
+    </form>
+</div>
     <div id="geral">
         <div id="header">
             <h1>Moderar Produtos</h1>
         </div>
 
+</div>
+</div>
         <div class="produtos-container">
             <?php while($res = mysqli_fetch_assoc($produtos)): ?>
                 <div class="produto">
@@ -108,4 +172,5 @@ $produtos = mysqli_query($conexao, "SELECT * FROM produtos ORDER BY id DESC");
     </div>
 </div>
 </body>
+</html>
 </html>
