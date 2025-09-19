@@ -1,17 +1,13 @@
 <?php
 include "conexao.php"; // Aqui já tem conexão MySQL + variáveis do Cloudinary ($cloud_name, $api_key, $api_secret)
-// ==========================
-// Inserir novo produto
-// ==========================
+
 if(isset($_POST['cadastra'])){
     // Pegando os dados do formulário (tratamento contra SQL Injection)
     $nome = mysqli_real_escape_string($conexao, $_POST['nome']);
     $descricao = mysqli_real_escape_string($conexao, $_POST['descricao']);
     $preco = floatval($_POST['preco']);
     $imagem_url = ""; // Inicializa a variável que vai guardar a URL da imagem
-    // --------------------------
-    // Upload da imagem para Cloudinary
-    // --------------------------
+    
     if(isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0){
         $cfile = new CURLFile($_FILES['imagem']['tmp_name'], $_FILES['imagem']['type'], $_FILES['imagem']['name']);
 
@@ -27,7 +23,7 @@ if(isset($_POST['cadastra'])){
         ];
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://api.cloudinary.com/v1_1/$dhorbcfoy/image/upload");
+        curl_setopt($ch, CURLOPT_URL, "https://api.cloudinary.com/v1_1/dhorbcfoy/image/upload");
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -43,17 +39,13 @@ if(isset($_POST['cadastra'])){
         }
     }
 
-    // ==========================
-    // Inserindo no banco de dados
-    // ==========================
+
     if($imagem_url != ""){
-        $sql = "INSERT INTO MUDAR_PRA_SUA (nome, descricao, preco, imagem_url) VALUES ('$nome', '$descricao', $preco, '$imagem_url')";
+        $sql = "INSERT INTO produtos (nome, descricao, preco, imagem_url) VALUES ('$nome', '$descricao', $preco, '$imagem_url')";
         mysqli_query($conexao, $sql) or die("Erro ao inserir: " . mysqli_error($conexao));
     }
 
-    // ==========================
-    // REDIRECIONAMENTO
-    // ==========================
+
     header("Location: mural.php");
     exit;
 }
